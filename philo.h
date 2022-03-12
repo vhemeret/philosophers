@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 02:54:01 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/12 18:35:03 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,25 @@ typedef struct	s_phil
 
 typedef struct	s_core
 {
-	struct	s_phil	*data;
-	struct	t_phil	*philo;
+	t_data	*data;
+	t_phil	*philo;
 }				t_core;
 
 /*####################### MANDATORY PART #######################*/
 
+/* CLEANING */
+int		cleaning(t_core *core);
+
 /* PARSING */
 int		check_error(t_data *data, int ac, char **av);
+t_core	*malloc_struct();
+
 
 /* UTILS */
 int		ft_atoi(const char *nptr);
 int		ft_isdigit(int c);
 
 /* LIST */
-void	create_liste(t_data *data, t_phil *philo);
+int		create_list(t_core *core);
 
 #endif
