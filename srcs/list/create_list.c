@@ -6,13 +6,23 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:46:10 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 02:45:59 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 13:59:51 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-void	create_node(t_phil **lst, t_phil **tmp, t_core *core)
+static void	init_philo(t_phil **philo)
+{
+	static int	index;
+
+	index += 1;
+	(*philo)->index = index;
+	(*philo)->nb_eat = 0;
+	(*philo)->forks = 0;
+}
+
+static void	create_node(t_phil **lst, t_phil **tmp, t_core *core)
 {
 	int		i;
 
@@ -23,7 +33,7 @@ void	create_node(t_phil **lst, t_phil **tmp, t_core *core)
 		if (!(*tmp)->next)
 			return ;
 		(*tmp) = (*tmp)->next;
-		(*tmp)->index = i;
+		init_philo(tmp);
 	}
 	(*tmp)->next = (*lst);
 }
@@ -39,7 +49,7 @@ void	create_list(t_core *core, t_phil **lst)
 		return ;
 	if (core->data->philo == 1)
 		(*lst)->next = *lst;
-	(*lst)->index = 0;
+	init_philo(lst);
 	tmp = *lst;
 	create_node(lst, &tmp, core);
 }

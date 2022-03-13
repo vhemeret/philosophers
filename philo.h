@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 21:13:31 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 13:46:25 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,25 @@
 
 typedef struct	s_data
 {
-	int	philo;
-	int	time_death;
-	int	time_eat;
-	int	time_sleep;
-	int	nb_eating;
-	int	is_death;
+	int				philo;
+	int				time_death;
+	int				time_eat;
+	int				time_sleep;
+	int				nb_eating;
+	int				is_dead;
+	pthread_mutex_t	launch;
+	pthread_mutex_t	print;
+	pthread_mutex_t	check_death;
 }				t_data;
 
 typedef struct	s_phil
 {
 	int				index;
+	int				nb_eat;
+	int				forks;
+	t_data			*data;
 	struct s_phil	*next;
-	// pthread_mutex_t
+	pthread_mutex_t	mutex;
 }				t_phil;
 
 typedef struct	s_core

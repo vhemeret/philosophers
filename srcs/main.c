@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 02:46:02 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 13:55:24 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@
 
 void	print_list(t_phil **lst)
 {
-	while (*lst)
+	int i;
+
+	i = -1;
+	while (++i < 5)
 	{
 		printf("philo -> %i\n", (*lst)->index);
 		(*lst) = (*lst)->next;
@@ -75,7 +78,7 @@ int	main(int ac, char **av)
 		return (0);
 	if (!check_error(core->data, ac, av))
 	{
-		printf("\033[35m Error into arguments.\n \033[00m");
+		printf("\033[35m Error into arguments.\033[00m\n");
 		return (cleaning(core));
 	}
 	create_list(core, &lst);
