@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 18:35:03 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/12 21:13:31 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ int		ft_atoi(const char *nptr);
 int		ft_isdigit(int c);
 
 /* LIST */
-int		create_list(t_core *core);
+void		create_list(t_core *core, t_phil **lst);
 
 #endif

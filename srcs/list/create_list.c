@@ -6,55 +6,50 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:46:10 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 18:42:06 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 01:06:49 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-static t_phil	*add_node()
-{
-	t_phil	*new_elem;
+// static t_phil	*add_node()
+// {
+// 	t_phil	*new_elem;
 
-	new_elem = malloc(sizeof(t_phil) * (1));
-	if (!new_elem)
-		return (NULL);
-	new_elem->index++;
-	return (new_elem);
-}
+// 	new_elem = malloc(sizeof(t_phil) * (1));
+// 	if (!new_elem)
+// 		return (NULL);
+// 	return (new_elem);
+// }
 
-int	create_list(t_core *core)
+void	create_node(t_phil **lst, t_phil **tmp, t_core *core)
 {
-	t_phil	*first_node;
-	t_phil	*tmp;
 	int		i;
 
 	i = -1;
-	first_node = malloc(sizeof(t_phil) * (1));
-	if (!first_node)
-		return (0);
-	first_node->index = 0;
 	while (++i < core->data->philo)
 	{
-		if (i == 0)
-		{
-			tmp = add_node();
-			first_node->next = tmp;
-			if (core->data->philo == 1)
-			{
-				tmp->next = first_node;
-				return (1);
-			}
-		}
-		else if (i + 1 == core->data->philo)
-		{
-			tmp->next = add_node();
-			tmp->next->next = first_node;
-			return (1);
-		}
-		else if (i < core->data->philo)
-			tmp->next = add_node();
+		(*tmp)->next = malloc(sizeof(t_phil) * (1));
+		if (!(*tmp)->next)
+			return ;
+		(*tmp) = (*tmp)->next;
+		(*tmp)->index += 1;
 	}
-	printf("ne doit pas passer ici\n");
-	return (0);
+	(*tmp)->next = (*lst);
+}
+
+void	create_list(t_core *core, t_phil **lst)
+{
+	int		i;
+	t_phil	*tmp;
+
+	i = -1;
+	(*lst) = malloc(sizeof(t_phil) * (1));
+	if (!lst)
+		return ;
+	if (core->data->philo == 1)
+		(*lst)->next = *lst;
+	(*lst)->index = 1;
+	tmp = *lst;
+	create_node(lst, &tmp, core);
 }

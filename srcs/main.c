@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 18:39:16 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 00:56:24 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,21 @@
 	// return (0);
 // }
 
+void	print_list(t_phil **lst)
+{
+	while (*lst)
+	{
+		printf("philo -> %i\n", (*lst)->index);
+		(*lst) = (*lst)->next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_core	*core;
-	
+	t_phil	*lst;
+
+	lst = NULL;
 	core = malloc_struct();
 	if (!core)
 		return (0);
@@ -67,8 +78,8 @@ int	main(int ac, char **av)
 		printf("\033[35m Error into arguments.\n \033[00m");
 		return (cleaning(core));
 	}
-	if (!create_list(core))
-		return (0);
+	create_list(core, &lst);
 	printf("list created\n");
+	print_list(&lst);
 	return (0);
 }
