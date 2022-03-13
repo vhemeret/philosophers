@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:46:10 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 13:59:51 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 16:43:08 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_philo(t_phil **philo)
 	index += 1;
 	(*philo)->index = index;
 	(*philo)->nb_eat = 0;
-	(*philo)->forks = 0;
+	(*philo)->forks = 1;
 }
 
 static void	create_node(t_phil **lst, t_phil **tmp, t_core *core)

@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 13:46:25 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 19:13:18 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/time.h>
 # include <pthread.h>
 
 # define INT_MAX 2147483647
@@ -36,11 +37,16 @@ typedef struct	s_data
 
 typedef struct	s_phil
 {
+	pthread_t		philo;
 	int				index;
 	int				nb_eat;
 	int				forks;
 	t_data			*data;
 	struct s_phil	*next;
+	suseconds_t		ms;
+	time_t			sc;
+	int				time;
+	//pthread_mutex_t forks;
 	pthread_mutex_t	mutex;
 }				t_phil;
 
@@ -55,16 +61,20 @@ typedef struct	s_core
 /* CLEANING */
 int		cleaning(t_core *core);
 
-/* PARSING */
-int		check_error(t_data *data, int ac, char **av);
-t_core	*malloc_struct();
-
-
 /* UTILS */
 int		ft_atoi(const char *nptr);
 int		ft_isdigit(int c);
 
+/* PARSING */
+int		check_error(t_data *data, int ac, char **av);
+
+/* STRUCT */
+t_core	*malloc_struct();
+
 /* LIST */
 void		create_list(t_core *core, t_phil **lst);
+
+/* PROCESS */
+void	create_threads(t_core *core, t_phil *lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 13:55:24 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/13 19:14:52 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@
 	// return (0);
 // }
 
-void	print_list(t_phil **lst)
+void	print_list(t_phil **lst, t_core *core)
 {
 	int i;
 
 	i = -1;
-	while (++i < 5)
+	printf("\033[32mList created\033[00m\n");
+	while (++i < core->data->philo)
 	{
-		printf("philo -> %i\n", (*lst)->index);
+		printf("\033[35mphilo -> %i\033[00m\n", (*lst)->index);
+		printf("\033[36mnb meals -> %i\033[00m\n", (*lst)->nb_eat);
+		printf("\033[34mnb fork(s) -> %i\033[00m\n\n", (*lst)->forks);
 		(*lst) = (*lst)->next;
 	}
 }
@@ -82,7 +85,8 @@ int	main(int ac, char **av)
 		return (cleaning(core));
 	}
 	create_list(core, &lst);
-	printf("list created\n");
-	print_list(&lst);
+	print_list(&lst, core);
+	create_threads(core, lst);
+	core->philo->time = gettimeofday(core->philo->sc, core->philo->ms);
 	return (0);
 }
