@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 19:14:52 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 05:26:04 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	main(int ac, char **av)
 		return (cleaning(core));
 	}
 	create_list(core, &lst);
-	print_list(&lst, core);
+	//print_list(&lst, core);
 	create_threads(core, lst);
-	core->philo->time = gettimeofday(core->philo->sc, core->philo->ms);
 	return (0);
 }

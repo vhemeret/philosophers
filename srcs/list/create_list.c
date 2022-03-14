@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:46:10 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 16:43:08 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 05:22:12 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	init_philo(t_phil **philo)
 	static int	index;
 
 	index += 1;
+	pthread_mutex_init(&(*philo)->right_fork, NULL);
+	pthread_mutex_init(&(*philo)->mutex, NULL);
 	(*philo)->index = index;
 	(*philo)->nb_eat = 0;
 	(*philo)->forks = 1;
@@ -40,10 +42,8 @@ static void	create_node(t_phil **lst, t_phil **tmp, t_core *core)
 
 void	create_list(t_core *core, t_phil **lst)
 {
-	int		i;
 	t_phil	*tmp;
 
-	i = -1;
 	(*lst) = malloc(sizeof(t_phil) * (1));
 	if (!lst)
 		return ;

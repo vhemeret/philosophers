@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:25:02 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 02:46:01 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 05:24:46 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,9 @@ int	check_error(t_data *data, int ac, char **av)
 		data->nb_eating = ft_atoi(av[5]);
 	if (!check_philo_value(data))
 		return (0);
+	pthread_mutex_init(&data->launch, NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->check_death, NULL);
+	data->is_dead = 0;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/13 19:13:18 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 05:17:30 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ typedef struct	s_phil
 	int				index;
 	int				nb_eat;
 	int				forks;
+	int				time;
 	t_data			*data;
 	struct s_phil	*next;
-	suseconds_t		ms;
-	time_t			sc;
-	int				time;
-	//pthread_mutex_t forks;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t *fork;
+	pthread_mutex_t right_fork;
 }				t_phil;
 
 typedef struct	s_core
@@ -76,5 +75,6 @@ void		create_list(t_core *core, t_phil **lst);
 
 /* PROCESS */
 void	create_threads(t_core *core, t_phil *lst);
+int		get_time(void);
 
 #endif
