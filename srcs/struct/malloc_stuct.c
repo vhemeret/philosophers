@@ -6,13 +6,29 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:18:29 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/12 18:32:27 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:49:51 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-t_core	*malloc_struct()
+static void	init_struct(t_data *data, int ac, char **av)
+{
+	data->philo = ft_atoi(av[1]);
+	data->time_death = ft_atoi(av[2]);
+	data->time_eat = ft_atoi(av[3]);
+	data->time_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		data->nb_eating = ft_atoi(av[5]);
+	else
+		data->nb_eating = -1;
+	pthread_mutex_init(&data->launch, NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->check_death, NULL);
+	data->is_dead = 0;
+}
+
+t_core	*malloc_and_init_struct(int ac, char **av)
 {
 	t_core	*core;
 
@@ -25,12 +41,6 @@ t_core	*malloc_struct()
 		free(core);
 		return (NULL);
 	}
-	core->philo = malloc(sizeof(t_phil));
-	if (!core->philo)
-	{
-		free(core->data);
-		free(core);
-		return (NULL);
-	}
+	init_struct(core->data, ac, av);
 	return (core);
 }

@@ -6,13 +6,13 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 22:13:32 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/14 04:58:51 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:46:37 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-int	get_time(void)
+int	get_time(long time)
 {
 	struct timeval	current_time;
 	int				res;
@@ -24,5 +24,5 @@ int	get_time(void)
 		return (-1);
 	}
 	res = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return (res);
+	return (res - time);
 }

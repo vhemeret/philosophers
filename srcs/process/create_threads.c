@@ -6,26 +6,36 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 16:56:56 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/14 05:45:35 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/15 05:30:22 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-void	*routine(void *lst)
+int	is_philo_dead(t_phil *philo)
 {
-	t_core	*core;
+	pthread_mutex_lock(&philo->data->check_death);
+	if (philo->data->is_dead == 1)
+	{
+		pthread_mutex_unlock(&philo->data->check_death);
+		return (1);
+	}
+	else
+		pthread_mutex_unlock(&philo->data->check_death);
+	return (0);
+}
 
-	core = (t_core *)lst;
-	//while (core->data->is_dead == 0)
-	//{
-	//	check_philo_death(lst);
-	//	philo_eat(lst);
-	//	philo_sleep(lst);
-	//	philo_think(lst);
-	//	lst = lst->next;
-	//}
-	printf("je suis le philo -> %i\n", core->philo->index);
+void	*routine(void *node)
+{
+	t_phil	*philo;
+
+	philo = (t_phil *)node;
+	while (!is_philo_dead(philo))
+	{
+		philo_eat(philo);
+		philo_sleep(philo);
+		// philo_think(philo);
+	}
 	return (NULL);
 }
 
@@ -50,11 +60,11 @@ void	create_threads(t_core *core, t_phil *lst)
 
 	i = -1;
 	tmp = lst;
-	core->philo->time = get_time();
-	printf("%i\n", core->philo->time);
+
+	core->data->time = get_time(0);
 	while (++i < core->data->philo)
 	{
-		pthread_create(&tmp->philo, NULL, &routine, tmp);
+		pthread_create(&(tmp->philo), NULL, routine, (void *)tmp);
 		tmp = tmp->next;
 	}
 	join_threads(lst, core);

@@ -6,13 +6,14 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/14 05:17:30 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/15 05:21:44 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+#define ICI printf("ICI\n");
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -30,6 +31,7 @@ typedef struct	s_data
 	int				time_sleep;
 	int				nb_eating;
 	int				is_dead;
+	int				time;
 	pthread_mutex_t	launch;
 	pthread_mutex_t	print;
 	pthread_mutex_t	check_death;
@@ -65,16 +67,18 @@ int		ft_atoi(const char *nptr);
 int		ft_isdigit(int c);
 
 /* PARSING */
-int		check_error(t_data *data, int ac, char **av);
+int		check_error(int ac, char **av);
 
 /* STRUCT */
-t_core	*malloc_struct();
+t_core	*malloc_and_init_struct(int ac, char **av);
 
 /* LIST */
-void		create_list(t_core *core, t_phil **lst);
+void	create_list(t_core *core, t_phil **lst);
 
 /* PROCESS */
+int		get_time(long time);
 void	create_threads(t_core *core, t_phil *lst);
-int		get_time(void);
+void	philo_sleep(t_phil *phil);
+int		is_philo_dead(t_phil *philo);
 
 #endif

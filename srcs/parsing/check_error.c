@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:25:02 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/14 05:24:46 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/14 22:41:44 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,37 +35,28 @@ static int	check_if_digits(char **av)
 	return (1);
 }
 
-static int	check_philo_value(t_data *data)
+static int	check_philo_value(int ac, char **av)
 {
-	if (data->philo > 200 || data->philo == 0)
+	if (ft_atoi(av[1]) > 200 || ft_atoi(av[1]) == 0)
 		return (0);
-	else if (data->time_death < 60 || data->time_eat < 60 || data->time_sleep < 60)
+	else if (ft_atoi(av[2]) < 60 || ft_atoi(av[3]) < 60 || ft_atoi(av[4]) < 60)
 		return (0);
-	else if (data->time_death > INT_MAX || data->time_eat > INT_MAX
-		|| data->time_sleep > INT_MAX)
-		return (0);
-	else if (data->nb_eating == 0 || data->nb_eating > INT_MAX)
-		return (0);
+	else if (ft_atoi(av[2]) > INT_MAX || ft_atoi(av[3]) > INT_MAX
+		|| ft_atoi(av[4]) > INT_MAX)
+			return (0);
+	if (ac == 6)
+		if (ft_atoi(av[5]) == 0 || ft_atoi(av[5]) > INT_MAX)
+			return (0);
 	return (1);
 }
 
-int	check_error(t_data *data, int ac, char **av)
+int	check_error(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
 		return (0);
 	if (!check_if_digits(av))
 		return (0);
-	data->philo = ft_atoi(av[1]);
-	data->time_death = ft_atoi(av[2]);
-	data->time_eat = ft_atoi(av[3]);
-	data->time_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		data->nb_eating = ft_atoi(av[5]);
-	if (!check_philo_value(data))
+	if (!check_philo_value(ac, av))
 		return (0);
-	pthread_mutex_init(&data->launch, NULL);
-	pthread_mutex_init(&data->print, NULL);
-	pthread_mutex_init(&data->check_death, NULL);
-	data->is_dead = 0;
 	return (1);
 }
