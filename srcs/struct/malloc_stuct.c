@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:18:29 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/15 02:49:51 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/16 07:10:08 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	init_struct(t_data *data, int ac, char **av)
 		data->nb_eating = ft_atoi(av[5]);
 	else
 		data->nb_eating = -1;
-	pthread_mutex_init(&data->launch, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->check_death, NULL);
+	pthread_mutex_init(&data->check_time, NULL);
 	data->is_dead = 0;
 }
 

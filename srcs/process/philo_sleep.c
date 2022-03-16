@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_sleep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/16 00:15:53 by vahemere         ###   ########.fr       */
+/*   Created: 2022/03/15 02:09:31 by vahemere          #+#    #+#             */
+/*   Updated: 2022/03/16 04:20:18 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../../philo.h"
 
-int	main(int ac, char **av)
+void	philo_sleep(t_phil *philo)
 {
-	t_core	*core;
-	t_phil	*lst;
-
-	lst = NULL;
-	if (!check_error(ac, av))
-		printf("\033[35m Error into arguments.\033[00m\n");
-	core = malloc_and_init_struct(ac, av);
-	if (!core)
-		return (0);
-	create_list(core, &lst);
-	core->philo = lst;
-	create_threads(core, lst);
-	return (0);
+	if (!is_philo_dead(philo))
+	{
+		pthread_mutex_lock(&philo->data->print);
+		printf("\033[32m[%i]\033[36m philo%i is sleeping\033[00m\n", get_time(philo->data->time_start), philo->index);
+		pthread_mutex_unlock(&philo->data->print);
+		usleep(philo->data->time_death * 1000);
+	}
 }

@@ -1,49 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   philo_think.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 02:09:31 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/15 05:32:35 by vahemere         ###   ########.fr       */
+/*   Created: 2022/03/16 02:43:02 by vahemere          #+#    #+#             */
+/*   Updated: 2022/03/16 04:20:19 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-void	philo_sleep(t_phil *philo)
-{
-	
-	if (!is_philo_dead(philo))
-	{
-		printf("[%i] philo%i is sleeping\n", get_time(philo->data->time), philo->index);
-		usleep(philo->data->time_death);
-	}
-}
-
-void	take_forks(t_phil *philo)
-{
-	
-}
-
-void	philo_eat(t_phil *philo)
+void	philo_think(t_phil *philo)
 {
 	if (!is_philo_dead(philo))
 	{
-		
-	}
+		pthread_mutex_lock(&philo->data->print);
+		printf("\033[32m[%i]\033[34m philo%i is thinking\033[00m\n", get_time(philo->data->time_start), philo->index);
+		pthread_mutex_unlock(&philo->data->print);
+	}	
 }
-// void	philo_sleep(t_phil *philo)
-// {
-// 	if (is_philo_dead() == FALSE)
-// 	{
-// 		get_time();
-// 		printf(...);
-// 		my_usleep();
-// 	}
-// }
-
-// thinking
-// get_time();
-// printf(...);

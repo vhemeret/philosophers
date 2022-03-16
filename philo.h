@@ -6,14 +6,13 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/15 05:21:44 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/16 07:09:35 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#define ICI printf("ICI\n");
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -21,20 +20,21 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-# define INT_MAX 2147483647
+# define INT_MAX	2147483647
 
 typedef struct	s_data
 {
+	pthread_t		death;
 	int				philo;
 	int				time_death;
 	int				time_eat;
 	int				time_sleep;
 	int				nb_eating;
 	int				is_dead;
-	int				time;
-	pthread_mutex_t	launch;
+	int				time_start;
 	pthread_mutex_t	print;
 	pthread_mutex_t	check_death;
+	pthread_mutex_t	check_time;
 }				t_data;
 
 typedef struct	s_phil
@@ -42,13 +42,12 @@ typedef struct	s_phil
 	pthread_t		philo;
 	int				index;
 	int				nb_eat;
-	int				forks;
+	int				nb_fork;
 	int				time;
 	t_data			*data;
 	struct s_phil	*next;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t *fork;
-	pthread_mutex_t right_fork;
+	pthread_mutex_t fork;
 }				t_phil;
 
 typedef struct	s_core
@@ -78,7 +77,9 @@ void	create_list(t_core *core, t_phil **lst);
 /* PROCESS */
 int		get_time(long time);
 void	create_threads(t_core *core, t_phil *lst);
+void	philo_eat(t_phil *philo);
 void	philo_sleep(t_phil *phil);
+void	philo_think(t_phil *philo);
 int		is_philo_dead(t_phil *philo);
 
 #endif
