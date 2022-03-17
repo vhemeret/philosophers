@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 00:07:42 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/16 08:05:18 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/17 07:04:03 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	take_fork(t_phil *philo)
 
 void	to_release_fork(t_phil *philo)
 {
-	if (!is_philo_dead(philo) && philo->nb_fork == 2)
+	if (/*!is_philo_dead(philo) && */philo->nb_fork == 2)
 	{
 		philo->next->nb_fork = 1;
 		philo->nb_fork = 1;
@@ -53,22 +53,9 @@ void	philo_eat(t_phil *philo)
 	{
 		philo_print_eat(philo);
 		usleep(philo->data->time_eat * 1000);
+		pthread_mutex_lock(&philo->data->check_time);
 		philo->time = get_time(0);
+		pthread_mutex_unlock(&philo->data->check_time);
+		to_release_fork(philo);
 	}
-	to_release_fork(philo);
 }
-
-
-// void	philo_sleep(t_phil *philo)
-// {
-// 	if (is_philo_dead() == FALSE)
-// 	{
-// 		get_time();
-// 		printf(...);
-// 		my_usleep();
-// 	}
-// }
-
-// thinking
-// get_time();
-// printf(...);

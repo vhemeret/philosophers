@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/16 07:09:35 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/17 06:36:36 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+#define ICI printf("ICI\n");
 
 # define INT_MAX	2147483647
 
 typedef struct	s_data
 {
-	pthread_t		death;
 	int				philo;
 	int				time_death;
 	int				time_eat;
@@ -39,6 +39,7 @@ typedef struct	s_data
 
 typedef struct	s_phil
 {
+	pthread_t		death;
 	pthread_t		philo;
 	int				index;
 	int				nb_eat;

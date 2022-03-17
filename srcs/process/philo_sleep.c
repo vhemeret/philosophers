@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 02:09:31 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/16 04:20:18 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/17 00:01:22 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	philo_sleep(t_phil *philo)
 		pthread_mutex_lock(&philo->data->print);
 		printf("\033[32m[%i]\033[36m philo%i is sleeping\033[00m\n", get_time(philo->data->time_start), philo->index);
 		pthread_mutex_unlock(&philo->data->print);
-		usleep(philo->data->time_death * 1000);
+		usleep(philo->data->time_sleep * 1000);
 	}
 }
