@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_threads.c                                   :+:      :+:    :+:   */
+/*   manage_philo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 16:56:56 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/17 07:16:55 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:42:17 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*check_death(void *lst)
 		}
 		pthread_mutex_unlock(&philo->data->check_time);
 	}
-	return (lst); ///////////////////////////////////////
+	return (lst);
 }
 
 void	*routine(void *node)
@@ -54,13 +54,13 @@ void	*routine(void *node)
 	philo = (t_phil *)node;
 	if (philo->index % 2 == 0)
 		usleep(100);
-	while (!is_philo_dead(philo))
+	while (!is_philo_dead(philo) && !check_meal(philo))
 	{
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
+			philo_eat(philo);
+			philo_sleep(philo);
+			philo_think(philo);
 	}
-	return (node); ////////////////////////////////////
+	return (node);
 }
 
 void	join_threads(t_phil *lst, t_core *core)
@@ -77,7 +77,7 @@ void	join_threads(t_phil *lst, t_core *core)
 	}
 }
 
-void	create_threads(t_core *core, t_phil *lst)
+void	manage_philo(t_core *core, t_phil *lst)
 {
 	int		i;
 	t_phil	*tmp;
@@ -87,9 +87,7 @@ void	create_threads(t_core *core, t_phil *lst)
 	core->data->time_start = get_time(0);
 	while (++i < core->data->philo)
 	{
-		// pthread_mutex_lock(&tmp->data->check_time);
 		tmp->time = get_time(0);
-		// pthread_mutex_unlock(&tmp->data->check_time);
 		pthread_create(&(tmp->philo), NULL, routine, tmp);
 		pthread_create(&(tmp->death), NULL, check_death, tmp);
 		tmp = tmp->next;

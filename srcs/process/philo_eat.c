@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 00:07:42 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/17 07:04:03 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:25:52 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	take_fork(t_phil *philo)
 {
 	if (!is_philo_dead(philo))
 	{
-		pthread_mutex_lock(&philo->next->fork);
-		pthread_mutex_lock(&philo->fork);
+		pthread_mutex_lock(philo->fork);
+		pthread_mutex_lock(philo->next->fork);
 		if (philo->next->nb_fork == 1)
 		{
 			philo->next->nb_fork = 0;
@@ -35,14 +35,45 @@ void	take_fork(t_phil *philo)
 	}
 }
 
+int	check_meal(t_phil *philo)
+{
+	pthread_mutex_lock(&philo->data->eating);
+	if (philo->data->nb_eat != -1)
+	{
+		if (philo->nb_eat == philo->data->nb_eat)
+		{
+			pthread_mutex_unlock(&philo->data->eating);
+			return (1);
+		}
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->data->eating);
+		return (0);
+	}
+	pthread_mutex_unlock(&philo->data->eating);
+	return (0);
+}
+
+void	increment_meal(t_phil *philo)
+{
+	pthread_mutex_lock(&philo->data->eating);
+	if (philo->data->nb_eat != -1)
+	{
+		if (philo->nb_eat < philo->data->nb_eat)
+			philo->nb_eat++;
+	}
+	pthread_mutex_unlock(&philo->data->eating);
+}
+
 void	to_release_fork(t_phil *philo)
 {
-	if (/*!is_philo_dead(philo) && */philo->nb_fork == 2)
+	if (philo->nb_fork == 2)
 	{
 		philo->next->nb_fork = 1;
 		philo->nb_fork = 1;
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(&philo->next->fork);
+		pthread_mutex_unlock(philo->next->fork);
+		pthread_mutex_unlock(philo->fork);
 	}
 }
 
@@ -51,11 +82,12 @@ void	philo_eat(t_phil *philo)
 	take_fork(philo);
 	if (!is_philo_dead(philo))
 	{
-		philo_print_eat(philo);
-		usleep(philo->data->time_eat * 1000);
 		pthread_mutex_lock(&philo->data->check_time);
 		philo->time = get_time(0);
 		pthread_mutex_unlock(&philo->data->check_time);
-		to_release_fork(philo);
+		philo_print_eat(philo);
+		increment_meal(philo);
+		usleep(philo->data->time_eat * 1000);
 	}
+	to_release_fork(philo);
 }
