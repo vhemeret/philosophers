@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 14:46:25 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 11:52:38 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	create_list(t_core *core, t_phil **lst);
 
 /* PROCESS */
 int		get_time(long time);
+void	ft_usleep(long ms);
 void	manage_philo(t_core *core, t_phil *lst);
 //void	manage_one_philo(t_core *core, t_phil *lst);
 int		check_meal(t_phil *philo);

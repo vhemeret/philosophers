@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 11:20:24 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:14:04 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 		// manage_one_philo(core, lst);
 	// else
 		manage_philo(core, lst);
-	cleaning(core);
 	printf("ici\n");
+	cleaning(core);
 	return (0);
 }

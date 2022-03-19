@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 00:07:42 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 16:25:52 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:55:41 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	philo_eat(t_phil *philo)
 	take_fork(philo);
 	if (!is_philo_dead(philo))
 	{
+		philo_print_eat(philo);
 		pthread_mutex_lock(&philo->data->check_time);
 		philo->time = get_time(0);
 		pthread_mutex_unlock(&philo->data->check_time);
-		philo_print_eat(philo);
 		increment_meal(philo);
-		usleep(philo->data->time_eat * 1000);
+		ft_usleep(philo->data->time_eat);
 	}
 	to_release_fork(philo);
 }

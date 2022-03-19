@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:24:51 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 14:47:53 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:15:51 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	cleaning_struct(t_core *core)
 
 int	cleaning(t_core *core)
 {
+	usleep(100);
 	destroy_mutex_data(core->data);
 	cleaning_list(core->philo);
 	cleaning_struct(core);

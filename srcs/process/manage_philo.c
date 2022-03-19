@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 16:56:56 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 14:42:17 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:27:03 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ void	*check_death(void *lst)
 		pthread_mutex_lock(&philo->data->check_time);
 		if (get_time(philo->time) >= philo->data->time_death && !is_philo_dead(philo))
 		{
-			pthread_mutex_lock(&philo->data->check_death);
-			philo->data->is_dead = 1;
-			pthread_mutex_unlock(&philo->data->check_death);
 			pthread_mutex_lock(&philo->data->print);
 			printf("\033[32m[%i]\033[31m philo%i died\033[00m\n", get_time(philo->data->time_start), philo->index);
 			pthread_mutex_unlock(&philo->data->print);
+			pthread_mutex_lock(&philo->data->check_death);
+			philo->data->is_dead = 1;
+			pthread_mutex_unlock(&philo->data->check_death);
 		}
 		pthread_mutex_unlock(&philo->data->check_time);
+		philo = philo->next;
 	}
 	return (lst);
 }
@@ -52,8 +53,8 @@ void	*routine(void *node)
 	t_phil	*philo;
 
 	philo = (t_phil *)node;
-	if (philo->index % 2 == 0)
-		usleep(100);
+	// if (philo->index % 2 == 0)
+		// usleep(100);
 	while (!is_philo_dead(philo) && !check_meal(philo))
 	{
 			philo_eat(philo);
@@ -89,8 +90,9 @@ void	manage_philo(t_core *core, t_phil *lst)
 	{
 		tmp->time = get_time(0);
 		pthread_create(&(tmp->philo), NULL, routine, tmp);
-		pthread_create(&(tmp->death), NULL, check_death, tmp);
 		tmp = tmp->next;
 	}
+	pthread_create(&(tmp->death), NULL, check_death, tmp);
+	pthread_detach(tmp->death);
 	join_threads(lst, core);
 }
