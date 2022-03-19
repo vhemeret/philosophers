@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:46:10 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/18 16:28:45 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:32:18 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	init_philo(t_phil **philo, t_core *core)
 
 	index += 1;
 	(*philo)->fork = malloc(sizeof(pthread_mutex_t));
+	if (!(*philo)->fork)
+		return ;
 	pthread_mutex_init((*philo)->fork, NULL);
 	pthread_mutex_init(&(*philo)->mutex, NULL);
 	(*philo)->index = index;

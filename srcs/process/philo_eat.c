@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 00:07:42 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 14:55:41 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 23:17:17 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,40 @@ void	take_fork(t_phil *philo)
 {
 	if (!is_philo_dead(philo))
 	{
-		pthread_mutex_lock(philo->fork);
 		pthread_mutex_lock(philo->next->fork);
 		if (philo->next->nb_fork == 1)
 		{
 			philo->next->nb_fork = 0;
+			pthread_mutex_unlock(philo->next->fork);
+			pthread_mutex_lock(philo->fork);
 			philo->nb_fork = 2;
+			pthread_mutex_unlock(philo->fork);
 		}
+		else
+			pthread_mutex_unlock(philo->next->fork);
 	}
 }
 
 int	check_meal(t_phil *philo)
 {
-	pthread_mutex_lock(&philo->data->eating);
-	if (philo->data->nb_eat != -1)
+	if (!is_philo_dead(philo))
 	{
-		if (philo->nb_eat == philo->data->nb_eat)
+		pthread_mutex_lock(&philo->data->eating);
+		if (philo->data->nb_eat != -1)
+		{
+			if (philo->nb_eat == philo->data->nb_eat)
+			{
+				pthread_mutex_unlock(&philo->data->eating);
+				return (1);
+			}
+		}
+		else
 		{
 			pthread_mutex_unlock(&philo->data->eating);
-			return (1);
+			return (0);
 		}
-	}
-	else
-	{
 		pthread_mutex_unlock(&philo->data->eating);
-		return (0);
 	}
-	pthread_mutex_unlock(&philo->data->eating);
 	return (0);
 }
 
@@ -68,13 +75,18 @@ void	increment_meal(t_phil *philo)
 
 void	to_release_fork(t_phil *philo)
 {
+	pthread_mutex_lock(philo->fork);
 	if (philo->nb_fork == 2)
 	{
-		philo->next->nb_fork = 1;
 		philo->nb_fork = 1;
-		pthread_mutex_unlock(philo->next->fork);
 		pthread_mutex_unlock(philo->fork);
+		pthread_mutex_lock(philo->next->fork);
+		philo->next->nb_fork = 1;
+		pthread_mutex_unlock(philo->next->fork);
 	}
+	else
+		pthread_mutex_unlock(philo->fork);
+	
 }
 
 void	philo_eat(t_phil *philo)
@@ -88,6 +100,8 @@ void	philo_eat(t_phil *philo)
 		pthread_mutex_unlock(&philo->data->check_time);
 		increment_meal(philo);
 		ft_usleep(philo->data->time_eat);
+		to_release_fork(philo);
 	}
-	to_release_fork(philo);
+	else
+		to_release_fork(philo);
 }

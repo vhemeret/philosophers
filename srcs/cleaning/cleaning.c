@@ -6,13 +6,13 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:24:51 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 15:15:51 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:45:53 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../philo.h"
 
-static void	destroy_mutex_data(t_data *data)
+static void	destroy_mutex_data_and_data(t_data *data)
 {
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->check_death);
@@ -39,17 +39,12 @@ static void cleaning_list(t_phil *philo)
 	}
 }
 
-static void	cleaning_struct(t_core *core)
-{
-	free(core->data);
-	free(core);
-}
-
 int	cleaning(t_core *core)
 {
 	usleep(100);
-	destroy_mutex_data(core->data);
+	destroy_mutex_data_and_data(core->data);
 	cleaning_list(core->philo);
-	cleaning_struct(core);
+	free(core->data);
+	free(core);
 	return (0);
 }

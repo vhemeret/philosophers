@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 16:56:56 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 15:27:03 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:41:12 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*check_death(void *lst)
 	t_phil	*philo;
 
 	philo = (t_phil *)lst;
-	while (!is_philo_dead(philo))
+	while (!is_philo_dead(philo) && !check_meal(philo))
 	{
 		pthread_mutex_lock(&philo->data->check_time);
 		if (get_time(philo->time) >= philo->data->time_death && !is_philo_dead(philo))
@@ -53,8 +53,8 @@ void	*routine(void *node)
 	t_phil	*philo;
 
 	philo = (t_phil *)node;
-	// if (philo->index % 2 == 0)
-		// usleep(100);
+	 if (philo->index % 2 == 0)
+		usleep(100);
 	while (!is_philo_dead(philo) && !check_meal(philo))
 	{
 			philo_eat(philo);
