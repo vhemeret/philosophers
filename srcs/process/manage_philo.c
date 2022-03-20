@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 16:56:56 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/20 02:10:26 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 22:41:32 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*routine(void *node)
 
 	philo = (t_phil *)node;
 	 if (philo->index % 2 == 0)
-		usleep(100);
+		ft_usleep(philo->data->time_eat / 2);
 	while (!is_philo_dead(philo) && !check_meal(philo))
 	{
 			philo_eat(philo);

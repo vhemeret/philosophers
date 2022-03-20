@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:23:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 19:29:47 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 22:10:04 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ typedef struct	s_data
 	int				nb_eat;
 	int				is_dead;
 	int				time_start;
+	int				all_eat;
 	pthread_mutex_t	print;
 	pthread_mutex_t	check_death;
 	pthread_mutex_t	check_time;
 	pthread_mutex_t	eating;
+	pthread_mutex_t	full;
 }				t_data;
 
 typedef struct	s_phil
@@ -79,7 +81,7 @@ void	create_list(t_core *core, t_phil **lst);
 int		get_time(long time);
 void	ft_usleep(long ms);
 void	manage_philo(t_core *core, t_phil *lst);
-//void	manage_one_philo(t_core *core, t_phil *lst);
+void	manage_one_philo(t_core *core, t_phil *lst);
 int		check_meal(t_phil *philo);
 int		is_philo_dead(t_phil *philo);
 void	philo_eat(t_phil *philo);

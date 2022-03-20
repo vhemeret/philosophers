@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 00:07:42 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/20 02:08:49 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 22:49:56 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_meal(t_phil *philo)
 		pthread_mutex_lock(&philo->data->eating);
 		if (philo->data->nb_eat != -1)
 		{
-			if (philo->nb_eat == philo->data->nb_eat)
+			if (philo->data->all_eat == philo->data->nb_eat * philo->data->philo)
 			{
 				pthread_mutex_unlock(&philo->data->eating);
 				return (1);
@@ -69,7 +69,12 @@ void	increment_meal(t_phil *philo)
 	if (philo->data->nb_eat != -1)
 	{
 		if (philo->nb_eat < philo->data->nb_eat)
+		{
 			philo->nb_eat++;
+			pthread_mutex_lock(&philo->data->full);
+			philo->data->all_eat++;
+			pthread_mutex_unlock(&philo->data->full);
+		}
 	}
 	pthread_mutex_unlock(&philo->data->eating);
 }
@@ -91,10 +96,10 @@ void	philo_eat(t_phil *philo)
 	{
 		philo_print_eat(philo);
 		pthread_mutex_lock(&philo->data->check_time);
-		philo->time = get_time(0);
 		pthread_mutex_unlock(&philo->data->check_time);
 		increment_meal(philo);
+		philo->time = get_time(0);
 		ft_usleep(philo->data->time_eat);
+		to_release_fork(philo);
 	}
-	to_release_fork(philo);
 }
