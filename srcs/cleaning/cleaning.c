@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 14:24:51 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 19:45:53 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:47:05 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void cleaning_list(t_phil *philo)
 	while (++i < nb_philo)
 	{
 		pthread_mutex_destroy(&philo->mutex);
+		free(philo->fork);
 		pthread_mutex_destroy(philo->fork);
 		tmp = philo;
 		philo = philo->next;

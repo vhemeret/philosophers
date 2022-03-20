@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 22:13:32 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 14:24:43 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:56:38 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_usleep(long ms)
 	current_time = get_time(0);
 	while ((current_time - start_time) <= ms)
 	{
+		usleep(50);
 		current_time = get_time(0);
-		usleep(100);
 	}
 }

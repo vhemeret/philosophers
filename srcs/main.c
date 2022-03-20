@@ -6,7 +6,7 @@
 /*   By: vahemere <vahemere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 03:51:34 by vahemere          #+#    #+#             */
-/*   Updated: 2022/03/19 19:38:29 by vahemere         ###   ########.fr       */
+/*   Updated: 2022/03/20 02:11:36 by vahemere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	main(int ac, char **av)
 
 	lst = NULL;
 	if (!check_error(ac, av))
+	{
 		printf("\033[35m Error into arguments.\033[00m\n");
+		return (0);
+	}
 	core = malloc_and_init_struct(ac, av);
 	if (!core)
 		return (0);
